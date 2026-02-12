@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Search, Eye, X, Calendar, User, CreditCard, ShoppingBag } from 'lucide-react';
-import { DB } from '../services/db';
-import { Sale, PaymentMethod } from '../types';
+import { DB } from '../services/db.ts';
+import { Sale, PaymentMethod } from '../types.ts';
 
 const SalesHistory: React.FC = () => {
   const [sales, setSales] = useState<Sale[]>([]);

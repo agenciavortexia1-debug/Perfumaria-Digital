@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { Plus, Search, Edit2, Trash2, AlertCircle, X } from 'lucide-react';
-import { DB } from '../services/db';
-import { Product } from '../types';
+import { DB } from '../services/db.ts';
+import { Product } from '../types.ts';
 
 const Inventory: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);

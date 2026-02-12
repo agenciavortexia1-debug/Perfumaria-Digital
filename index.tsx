@@ -1,8 +1,8 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import { DB } from './services/db';
+import App from './App.tsx';
+import { DB } from './services/db.ts';
 
 // Inicializa dados de exemplo se o banco estiver vazio
 DB.seed();

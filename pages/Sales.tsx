@@ -9,11 +9,10 @@ import {
   CheckCircle2,
   X,
   Package,
-  Sparkles,
-  MousePointer2
+  Sparkles
 } from 'lucide-react';
-import { DB } from '../services/db';
-import { Product, Customer, Sale, PaymentMethod, PaymentStatus, Installment, SaleItem } from '../types';
+import { DB } from '../services/db.ts';
+import { Product, Customer, Sale, PaymentMethod, PaymentStatus, Installment, SaleItem } from '../types.ts';
 
 const Sales: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -40,7 +39,6 @@ const Sales: React.FC = () => {
       if (product.stock <= 0) return alert('Estoque insuficiente');
       setCart([...cart, { productId: product.id, productName: product.name, quantity: 1, unitPrice: product.price, total: product.price }]);
     }
-    // Opcional: Limpar busca após adicionar
     setSearchProduct('');
   };
 
@@ -119,7 +117,6 @@ const Sales: React.FC = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 animate-in fade-in duration-300">
       <div className="lg:col-span-8 space-y-4">
-        {/* Barra de Busca Superior */}
         <div className="flex flex-col md:flex-row gap-3">
           <div className="flex-1 relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
@@ -141,7 +138,6 @@ const Sales: React.FC = () => {
           </div>
         </div>
 
-        {/* Área Central Principal */}
         <div className="min-h-[400px] flex flex-col">
           {isIdle ? (
             <div className="flex-1 flex flex-col items-center justify-center bg-white dark:bg-slate-900 border border-dashed border-slate-200 dark:border-slate-800 rounded-md p-12 text-center">
@@ -153,7 +149,6 @@ const Sales: React.FC = () => {
             </div>
           ) : (
             <div className="space-y-6">
-              {/* Resultados de Clientes */}
               {(filteredCustomers.length > 0 || selectedCustomer) && (
                 <div className="space-y-2">
                   <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest px-1">Cliente Selecionado / Encontrado</label>
@@ -179,7 +174,6 @@ const Sales: React.FC = () => {
                 </div>
               )}
 
-              {/* Resultados de Produtos */}
               {searchProduct.length > 0 && (
                 <div className="space-y-2">
                   <label className="text-[9px] font-black text-slate-400 uppercase tracking-widest px-1">Resultados da Busca de Produtos</label>
@@ -220,7 +214,6 @@ const Sales: React.FC = () => {
         </div>
       </div>
 
-      {/* Barra Lateral do Carrinho */}
       <div className="lg:col-span-4 bg-white dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800 shadow-xl flex flex-col h-[calc(100vh-140px)] sticky top-6">
         <div className="p-4 border-b dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
           <h2 className="text-[11px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-[0.2em] flex items-center gap-2">

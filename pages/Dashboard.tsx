@@ -6,7 +6,6 @@ import {
   Package, 
   Calendar as CalendarIcon,
   X,
-  ArrowRight,
   History
 } from 'lucide-react';
 import { 
@@ -22,10 +21,10 @@ import {
   Cell,
   LabelList
 } from 'recharts';
-import { DB } from '../services/db';
-import { DashboardStats, Sale } from '../types';
-import StatCard from '../components/StatCard';
-import DateRangePicker from '../components/DateRangePicker';
+import { DB } from '../services/db.ts';
+import { Sale } from '../types.ts';
+import StatCard from '../components/StatCard.tsx';
+import DateRangePicker from '../components/DateRangePicker.tsx';
 import { useNavigate } from 'react-router-dom';
 
 const COLORS = ['#6366f1', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6'];
@@ -137,7 +136,7 @@ const Dashboard: React.FC = () => {
   const modalData = getModalContent();
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-500">
+    <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
           <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter uppercase italic">Painel de Controle</h1>
@@ -148,7 +147,7 @@ const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard 
-          label="Receita no Período" 
+          label="Receita Período" 
           value={`R$ ${stats.totalRevenue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`} 
           icon={DollarSign} 
           colorClass="bg-indigo-600"
@@ -169,7 +168,7 @@ const Dashboard: React.FC = () => {
           colorClass="bg-rose-600"
         />
         <StatCard 
-          label="Volume de Vendas" 
+          label="Volume Vendas" 
           value={stats.totalSales} 
           icon={TrendingUp} 
           onClick={() => setActiveModal('volume')}
@@ -179,11 +178,11 @@ const Dashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-white dark:bg-slate-900 p-6 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm">
-          <h3 className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-8">Frequência de Vendas (Quantidade Diária)</h3>
+          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8">Frequência de Vendas</h3>
           <div className="h-80 w-full">
             {weeklySalesData.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={weeklySalesData} margin={{ top: 25, right: 30, left: 0, bottom: 5 }}>
+                <BarChart data={weeklySalesData}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" opacity={0.3} />
                   <XAxis 
                     dataKey="date" 
@@ -195,27 +194,25 @@ const Dashboard: React.FC = () => {
                   <YAxis hide />
                   <Tooltip 
                     cursor={{ fill: 'rgba(79, 70, 229, 0.05)' }}
-                    contentStyle={{ backgroundColor: '#0f172a', color: '#f8fafc', borderRadius: '4px', border: 'none', fontSize: '10px', fontWeight: 'bold' }}
-                    formatter={(val) => [`${val} Vendas`]}
+                    contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '4px', fontSize: '10px' }}
                   />
                   <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} barSize={45}>
                     <LabelList 
                       dataKey="value" 
-                      position="center" 
-                      formatter={(val: number) => `${val} VEND.`}
-                      style={{ fill: '#ffffff', fontSize: '9px', fontWeight: '900', textTransform: 'uppercase' }}
+                      position="top" 
+                      style={{ fill: '#94a3b8', fontSize: '9px', fontWeight: '900' }}
                     />
                   </Bar>
                 </BarChart>
               </ResponsiveContainer>
             ) : (
-              <div className="h-full flex items-center justify-center text-slate-300 uppercase font-black text-[10px] tracking-widest italic">Nenhuma venda registrada no período selecionado.</div>
+              <div className="h-full flex items-center justify-center text-slate-300 uppercase font-black text-[10px] tracking-widest italic">Sem dados.</div>
             )}
           </div>
         </div>
 
         <div className="bg-white dark:bg-slate-900 p-6 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col">
-          <h3 className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-6">Mix de Categorias</h3>
+          <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6">Mix Categorias</h3>
           <div className="flex-1 flex flex-col items-center justify-center">
             <ResponsiveContainer width="100%" height={240}>
               <PieChart>
@@ -235,30 +232,19 @@ const Dashboard: React.FC = () => {
                 <Tooltip />
               </PieChart>
             </ResponsiveContainer>
-            <div className="grid grid-cols-2 gap-x-4 gap-y-2 mt-4 w-full">
-              {stats.categoryDistribution.map((cat: any, i: number) => (
-                <div key={cat.name} className="flex items-center justify-between text-[10px]">
-                  <div className="flex items-center gap-2 text-ellipsis overflow-hidden">
-                    <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: COLORS[i % COLORS.length] }}></div>
-                    <span className="text-slate-500 dark:text-slate-400 font-black uppercase truncate">{cat.name}</span>
-                  </div>
-                  <span className="font-black text-slate-900 dark:text-slate-200 ml-2">{cat.value}</span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>
 
       {activeModal && modalData && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200">
-           <div className="bg-white dark:bg-slate-900 rounded-md w-full max-md shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+           <div className="bg-white dark:bg-slate-900 rounded-md w-full max-w-sm shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
             <div className="p-4 border-b dark:border-slate-800 flex items-center justify-between bg-slate-50 dark:bg-slate-800/50">
               <h4 className="text-[11px] font-black text-slate-800 dark:text-slate-100 uppercase tracking-widest">{modalData.title}</h4>
               <button onClick={() => setActiveModal(null)} className="text-slate-400 hover:text-slate-600 transition-colors"><X size={20} /></button>
             </div>
             <div className="p-4 space-y-3">
-              {modalData.items.length > 0 ? modalData.items.map((item: any, idx: number) => (
+              {modalData.items.map((item: any, idx: number) => (
                 <div key={idx} className="flex items-center justify-between p-3 rounded-md bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
                   <div className="min-w-0">
                     <p className="text-[10px] font-black text-slate-800 dark:text-white uppercase truncate">{item.label}</p>
@@ -266,26 +252,16 @@ const Dashboard: React.FC = () => {
                   </div>
                   <span className="text-xs font-black text-indigo-600 dark:text-indigo-400">{item.value}</span>
                 </div>
-              )) : (
-                <p className="text-center py-8 text-[10px] font-black text-slate-400 uppercase">Nenhum dado encontrado.</p>
-              )}
-              
-              <div className="pt-2 flex flex-col gap-2">
+              ))}
+              <div className="pt-2">
                 <button 
                   onClick={() => {
                     if(modalData.footerAction) modalData.footerAction();
                     setActiveModal(null);
                   }}
-                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-widest rounded-md flex items-center justify-center gap-2 transition-all shadow-md"
+                  className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white text-[10px] font-black uppercase tracking-widest rounded-md flex items-center justify-center gap-2"
                 >
-                  <History size={14} />
-                  Ver Detalhes Completos
-                </button>
-                <button 
-                  onClick={() => setActiveModal(null)} 
-                  className="w-full py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-black uppercase tracking-widest rounded-md flex items-center justify-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-                >
-                  Fechar Janela
+                  <History size={14} /> Ver Detalhes
                 </button>
               </div>
             </div>

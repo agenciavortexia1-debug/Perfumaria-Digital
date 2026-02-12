@@ -5,8 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#0f172a" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Perfumaria Digital - Gestão Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -25,32 +23,26 @@
     <style>
       body { font-family: 'Inter', sans-serif; }
       * { -webkit-tap-highlight-color: transparent; }
-      .transition-colors { transition-duration: 200ms; }
-      
-      /* Otimização de Scrollbars */
-      ::-webkit-scrollbar { width: 6px; height: 6px; }
-      ::-webkit-scrollbar-track { background: transparent; }
-      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-      .dark ::-webkit-scrollbar-thumb { background: #334155; }
-      
-      /* Fix para altura mínima no mobile */
       .min-h-screen-ios { min-height: -webkit-fill-available; }
     </style>
-  <script type="importmap">
-{
-  "imports": {
-    "@google/genai": "https://esm.sh/@google/genai@^1.41.0",
-    "recharts": "https://esm.sh/recharts@^3.7.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.13.0",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "react": "https://esm.sh/react@^19.2.4"
-  }
-}
-</script>
-</head>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@19.0.0",
+        "react/": "https://esm.sh/react@19.0.0/",
+        "react-dom": "https://esm.sh/react-dom@19.0.0",
+        "react-dom/": "https://esm.sh/react-dom@19.0.0/",
+        "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
+        "react-router-dom": "https://esm.sh/react-router-dom@7.1.3?external=react,react-dom",
+        "lucide-react": "https://esm.sh/lucide-react@0.474.0?external=react,react-dom",
+        "recharts": "https://esm.sh/recharts@2.15.0?external=react,react-dom",
+        "@google/genai": "https://esm.sh/@google/genai@0.21.0"
+      }
+    }
+    </script>
+  </head>
   <body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100">
     <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

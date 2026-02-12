@@ -26,9 +26,9 @@ import {
   PieChart,
   Pie
 } from 'recharts';
-import { DB } from '../services/db';
-import { PaymentMethod } from '../types';
-import DateRangePicker from '../components/DateRangePicker';
+import { DB } from '../services/db.ts';
+import { PaymentMethod } from '../types.ts';
+import DateRangePicker from '../components/DateRangePicker.tsx';
 
 const COLORS = ['#4f46e5', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899'];
 
