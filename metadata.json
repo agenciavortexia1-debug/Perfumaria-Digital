@@ -1,7 +1,5 @@
 {
   "name": "Perfumaria Digital",
-  "description": "Sistema completo de gestão para lojas de perfume, incluindo cadastro de clientes, controle de estoque, PDV com parcelamento, contas a receber e insights por IA.",
-  "requestFramePermissions": [
-    "camera"
-  ]
+  "description": "Sistema completo de gestão para lojas de perfume, incluindo cadastro de clientes, controle de estoque, PDV com parcelamento e contas a receber.",
+  "requestFramePermissions": []
 }
